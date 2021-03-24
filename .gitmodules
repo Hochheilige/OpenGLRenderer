@@ -1,0 +1,12 @@
+[submodule "OpenGLRenderer/Resources/glfw"]
+	path = OpenGLRenderer/Resources/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "OpenGLRenderer/Resources/glew-cmake"]
+	path = OpenGLRenderer/Resources/glew-cmake
+	url = https://github.com/Perlmint/glew-cmake.git
+[submodule "OpenGLRenderer/Resources/glm"]
+	path = OpenGLRenderer/Resources/glm
+	url = https://github.com/g-truc/glm.git
+[submodule "OpenGLRenderer/Resources/stb"]
+	path = OpenGLRenderer/Resources/stb
+	url = https://github.com/nothings/stb.git

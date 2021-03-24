@@ -1,0 +1,22 @@
+﻿{
+  "configurations": [
+    {
+      "name": "Debug",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "variables": [
+        {
+          "name": "CMAKE_INSTALL_PREFIX",
+          "value": "F:/Projects/projects C and C++/Computer Graphics/OpenGL/OpenGLRenderer/out/install/Debug",
+          "type": "PATH"
+        }
+      ]
+    }
+  ]
+}
