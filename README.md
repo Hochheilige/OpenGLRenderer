@@ -1,2 +1,2 @@
 # OpenGLRenderer
-OpenGLRenderer
+Simple renderer using OpenGL
