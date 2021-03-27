@@ -74,7 +74,10 @@ int main() {
 		glm::vec3(-1.3f,  1.0f, -1.5f)
 	};
 
-	Texture blue("textures/blue.jpg", TextureType::JPG);
+	Texture blue;
+	blue.SetWrapType(TextureWrap::REPEAT);
+	TextureFormat rgb = TextureFormat::RGB;
+	blue.Load("textures/blue.jpg", TextureFormat::RGB);
 	Shader shaders("shaders/shader.vert", "shaders/shader.frag");
 
 	VertexArray vao;

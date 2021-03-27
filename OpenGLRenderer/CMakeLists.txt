@@ -13,16 +13,12 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/textures/wall.jpg DESTINATION ${CMAKE_
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/textures/awesomeface.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/textures)
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/textures/blue.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/textures)
 
-
 add_subdirectory(Resources/glfw Resources/glfw)
 add_subdirectory(Resources/glew-cmake Resources/glew)
 add_subdirectory(Resources/glm Resources/glm)
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/Resources/stb/stb_image.h DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/Resources/)
-
 add_executable (OpenGLRenderer 
 	"Application.cpp" 
-	"Resources/stb_image.h"
     "src/Window.h"
     "src/Window.cpp" 
 	"src/Buffer.h" 
@@ -35,13 +31,18 @@ add_executable (OpenGLRenderer
     "src/Vertex.h"
 	"src/Shaders.h"
 	"src/Shaders.cpp"
- "src/BufferLayout.h" "src/Texture.cpp" "src/Camera.h" "Resources/stb_image.cpp")
+    "src/BufferLayout.h" 
+	"src/Texture.h"
+	"src/Texture.cpp" 
+	"src/Camera.h" 
+)
 
 target_include_directories(${PROJECT_NAME}
 	PUBLIC Resources
 	PUBLIC Resources/glfw/include
 	PUBLIC Resources/glm
 	PUBLIC Resources/glew-cmake/include
+	PUBLIC Resources/stb
 	PUBLIC src
 )
 
@@ -50,6 +51,7 @@ target_link_directories(${PROJECT_NAME}
 	PUBLIC Resources/glfw/src
 	PUBLIC Resources/glm
 	PUBLIC Resources/glew/lib
+	PUBLIC Resources/stb
 )
 
 target_link_libraries(${PROJECT_NAME} glfw libglew_static)
