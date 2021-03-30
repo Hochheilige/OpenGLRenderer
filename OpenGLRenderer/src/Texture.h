@@ -32,7 +32,7 @@ namespace Renderer {
 
 		void GenerateMipmaps();
 
-		void Bind();
+		void Bind(uint32_t slot = 0);
 
 		void UnBind();
 	private:

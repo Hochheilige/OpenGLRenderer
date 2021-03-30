@@ -12,11 +12,10 @@ namespace Renderer {
     Texture::~Texture(){
         glDeleteTextures(1, &id);
         id = 0;
-
     }
 
     void Texture::Load(const std::string& path, TextureFormat format) {
-        Bind();
+        glBindTexture(GL_TEXTURE_2D, id);
 
         stbi_set_flip_vertically_on_load(true);
         data = stbi_load(path.c_str(), &width, &height, &channels, 0);
@@ -27,29 +26,29 @@ namespace Renderer {
         
         GenerateMipmaps();
 
-        stbi_image_free(data);
+        if (data)
+            stbi_image_free(data);
     }
 
     void Texture::SetWrapType(TextureWrap wrap) {
-        Bind();
+        glBindTexture(GL_TEXTURE_2D, id);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, (GLint)wrap);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, (GLint)wrap);
     }
 
     void Texture::GenerateMipmaps() {
-        Bind();
+        glBindTexture(GL_TEXTURE_2D, id);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glGenerateMipmap(GL_TEXTURE_2D);
     }
 
-    void Texture::Bind() {
-        glActiveTexture(GL_TEXTURE0);
+    void Texture::Bind(uint32_t slot) {
+        glActiveTexture(GL_TEXTURE0 + slot);
         glBindTexture(GL_TEXTURE_2D, id);
     }
 
     void Texture::UnBind() {
-        glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 

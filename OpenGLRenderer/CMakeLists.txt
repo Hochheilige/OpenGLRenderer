@@ -35,7 +35,8 @@ add_executable (OpenGLRenderer
 	"src/Texture.h"
 	"src/Texture.cpp" 
 	"src/Camera.h" 
-)
+	"src/Camera.cpp"
+ )
 
 target_include_directories(${PROJECT_NAME}
 	PUBLIC Resources

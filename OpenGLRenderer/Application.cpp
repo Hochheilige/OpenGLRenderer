@@ -74,10 +74,12 @@ int main() {
 		glm::vec3(-1.3f,  1.0f, -1.5f)
 	};
 
-	Texture blue;
-	blue.SetWrapType(TextureWrap::REPEAT);
-	TextureFormat rgb = TextureFormat::RGB;
-	blue.Load("textures/blue.jpg", TextureFormat::RGB);
+	Texture containerTexture;
+	containerTexture.SetWrapType(TextureWrap::REPEAT);
+	containerTexture.Load("textures/container.jpg", TextureFormat::RGB);
+	Texture smileTexture;
+	smileTexture.SetWrapType(TextureWrap::REPEAT);
+	smileTexture.Load("textures/awesomeface.png", TextureFormat::RGBA);
 	Shader shaders("shaders/shader.vert", "shaders/shader.frag");
 
 	VertexArray vao;
@@ -87,7 +89,10 @@ int main() {
 	vao.AddBuffer(vbo);
 
 	shaders.Use();
-	shaders.SetInt("ourTexture", 0);
+	containerTexture.Bind();
+	smileTexture.Bind(1);
+	shaders.SetInt("containerTex", 0);
+	shaders.SetInt("smileTex", 1);
 	
 	glm::mat4 projection;
 	glm::mat4 model;
@@ -102,15 +107,13 @@ int main() {
 		glClearColor(0.2f, 0.5f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		blue.Bind();
+		containerTexture.Bind();
+		smileTexture.Bind(1);
 		shaders.Use();
 
-		projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+		projection = glm::perspective(glm::radians(camera.GetZoom()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 		shaders.setMat4("projection", projection);
-
-		// camera/view transformation
-		view = camera.GetViewMatrix();
-		shaders.setMat4("view", view);
+		shaders.setMat4("view", camera.GetViewMatrix());
 
 		vao.Bind();
 		for (uint32_t i = 0; i < 10; ++i) {
