@@ -14,6 +14,7 @@ namespace Renderer {
 			throw runtime_error("Failed to create GLFW Window");
 		}
 		glfwMakeContextCurrent(window);
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		glewInitialization();
 		glViewport(0, 0, width, height);
 		glEnable(GL_DEPTH_TEST);

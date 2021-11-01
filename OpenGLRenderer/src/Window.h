@@ -20,7 +20,9 @@ namespace Renderer {
 		bool ShouldClose();
 		void SwapBuffers();
 		void PollEvents();
-	private:
+
+		inline GLFWwindow* GetWindow() { return window; }
+ 	private:
 		GLFWwindow* window = nullptr;
 
 		void glfwInitialization();

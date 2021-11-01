@@ -12,6 +12,11 @@
 #include <Texture.h>
 #include <Camera.h>
 
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+void processInput(GLFWwindow *window);
+
 using namespace Renderer;
 
 // settings
@@ -30,6 +35,9 @@ float lastFrame = 0.0f;
 
 int main() {
 	Window window(800, 600, "Application");
+	glfwSetFramebufferSizeCallback(window.GetWindow(), framebuffer_size_callback);
+    glfwSetCursorPosCallback(window.GetWindow(), mouse_callback);
+    glfwSetScrollCallback(window.GetWindow(), scroll_callback);
 	
 	std::vector<Vertex> vertexes = {
 		{{ 0.5f,  0.5f, -0.5f}, {1.0f, 1.0f}},
@@ -104,6 +112,8 @@ int main() {
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
+		processInput(window.GetWindow());
+
 		glClearColor(0.2f, 0.5f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -111,9 +121,10 @@ int main() {
 		smileTexture.Bind(1);
 		shaders.Use();
 
+		view = camera.GetViewMatrix();
 		projection = glm::perspective(glm::radians(camera.GetZoom()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 		shaders.setMat4("projection", projection);
-		shaders.setMat4("view", camera.GetViewMatrix());
+		shaders.setMat4("view", view);
 
 		vao.Bind();
 		for (uint32_t i = 0; i < 10; ++i) {
@@ -131,4 +142,46 @@ int main() {
 	}
 
 	return 0;
+}
+
+void processInput(GLFWwindow *window)
+{
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);
+
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        camera.ProcessKeyboard(Renderer::CameraMovement::FORWARD, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        camera.ProcessKeyboard(Renderer::CameraMovement::BACKWARD, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        camera.ProcessKeyboard(Renderer::CameraMovement::LEFT, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        camera.ProcessKeyboard(Renderer::CameraMovement::RIGHT, deltaTime);
+}
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+    // make sure the viewport matches the new window dimensions; note that width and 
+    // height will be significantly larger than specified on retina displays.
+    glViewport(0, 0, width, height);
+}
+
+void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
+    if (firstMouse)
+    {
+        lastX = xpos;
+        lastY = ypos;
+        firstMouse = false;
+    }
+
+    float xoffset = xpos - lastX;
+    float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+
+    lastX = xpos;
+    lastY = ypos;
+
+    camera.ProcessMouseMovement(xoffset, yoffset);
+}
+
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
+    camera.ProcessMouseScroll(yoffset);
 }

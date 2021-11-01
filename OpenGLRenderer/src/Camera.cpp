@@ -66,9 +66,9 @@ namespace Renderer {
         front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
         front.y = sin(glm::radians(pitch));
         front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-        front = glm::normalize(front);
-        right = glm::normalize(glm::cross(front, worldUp)); 
-        up = glm::normalize(glm::cross(right, front));
+        this->front = glm::normalize(front);
+        right = glm::normalize(glm::cross(this->front, worldUp)); 
+        up = glm::normalize(glm::cross(right, this->front));
     }
 
 }
