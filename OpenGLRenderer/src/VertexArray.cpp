@@ -21,7 +21,7 @@ namespace Renderer {
 			stride += layout.byteSize;
 		 
 		for (size_t i = 0; i < layouts.size(); ++i) {
-			glVertexAttribPointer(i, layouts[i].size, layouts[i].type, GL_FALSE, stride, (void*)offset);
+			glVertexAttribPointer(i, layouts[i].size, layouts[i].type, GL_FALSE, stride, reinterpret_cast<void*>(offset));
 			glEnableVertexAttribArray(i);
 			offset += layouts[i].byteSize;
 		}

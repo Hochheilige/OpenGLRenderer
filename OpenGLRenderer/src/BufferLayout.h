@@ -1,9 +1,9 @@
 #pragma once 
 
-#define GLEW_STATIC
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include <cassert>
 #include <array>
 
 #include <Vertex.h>
@@ -42,11 +42,10 @@ namespace Renderer {
 		Layout<Vector2>().data
 	};
 
-	static uint32_t GetSizeOfType(uint32_t type) {
+	[[maybe_unused]] static uint32_t GetSizeOfType(uint32_t type) {
 		switch (type) {
 			case GL_FLOAT: return sizeof(float);
-			default:
-				break;
+			default: return 0;
 		}
 	}
 }
