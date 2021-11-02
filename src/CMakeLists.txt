@@ -29,7 +29,7 @@ target_include_directories(
 	PUBLIC ${CMAKE_SOURCE_DIR}/resources
 	PUBLIC ${CMAKE_SOURCE_DIR}/resources/glfw/include
 	PUBLIC ${CMAKE_SOURCE_DIR}/resources/glm
-	PUBLIC ${CMAKE_SOURCE_DIR}/resources/glew-cmake/include
+	PUBLIC ${CMAKE_SOURCE_DIR}/resources/glew/include
 	PUBLIC ${CMAKE_SOURCE_DIR}/resources/stb
 	PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 )
