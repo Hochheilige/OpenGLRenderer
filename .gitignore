@@ -61,6 +61,7 @@ CMakeUserPresets.json
 *-prefix/
 
 .vs/
+.vscode/
 out/build/
 build/
 
